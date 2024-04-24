@@ -21,7 +21,7 @@ const Usuario = sequelize.define('Usuarios', {
     bairro: Sequelize.STRING,
     cidade: Sequelize.STRING,
     estado: Sequelize.STRING,
-    fotos: Sequelize.STRING,
+    foto: Sequelize.STRING,
     Tipos_Usuarios_idTipos_Usuarios: Sequelize.INTEGER // Chave estrangeira que referencia o modelo Tipos_Usuarios
 }, {
     // Desabilita a criação dos campos createdAt e updatedAt
