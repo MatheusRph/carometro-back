@@ -4,6 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controllers/usuario');
+const turmaController = require('../controllers/turma');
 
 //retorna todos usuarios
 router.get('/usuario', usuarioController.getAll)
@@ -11,6 +12,10 @@ router.get('/usuario/:id', usuarioController.getById)
 
 //cria um usuario passando informação no body
 router.post('/usuario', usuarioController.createrUsuario)
+
+router.get('/turmas', turmaController.getAll)
+
+router.post('/turmas', turmaController.createTurma)
 
 //INSERIR OUTRAS ROTAS -->
 /* router.get('/turmas', turmasController.getAll)
