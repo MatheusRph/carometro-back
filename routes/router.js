@@ -14,8 +14,8 @@ router.get('/usuario/:id', usuarioController.getById)
 router.post('/usuario', usuarioController.createrUsuario)
 
 router.get('/turmas', turmaController.getAll)
-
 router.post('/turmas', turmaController.createTurma)
+router.put('/turma/:codigo' turmaController.update)
 
 //INSERIR OUTRAS ROTAS -->
 /* router.get('/turmas', turmasController.getAll)

@@ -59,4 +59,3 @@ exports.createrUsuario = async (req, res) => {
         return res.status(500).send('Erro ao criar usuário. Por favor, tente novamente.');
     }
 };
-

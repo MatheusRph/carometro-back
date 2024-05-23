@@ -34,3 +34,18 @@ exports.createTurma = async (req, res) => {
         return res.status(500).send('Erro ao criar turma. Por favor, tente novamente.');
     }
 };
+
+exports.update = async (req, res) => {
+    const codigoTurma = req.params.codigo;
+    try{
+        const turmaCadastrada = await Turma.findOne({ where: {codigo: codigoTurma }});
+
+        if (turmaCadastrada) {
+            delete req.body.codigo
+
+            const [numRowsUpdate] = await Turma(req.body, {where: {codigo: codigoTurma}})
+        }
+    } catch {
+
+    }
+}
