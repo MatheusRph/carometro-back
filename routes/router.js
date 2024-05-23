@@ -1,23 +1,40 @@
-//routes/router.js
-//nesse arquivo estarão todas as rotas
-//no caso de um proj com muitas rotas e possivel quebrar as rotas em mais arquivos
+// routes/router.js
+// Neste arquivo estão definidas todas as rotas do projeto.
+// Em projetos com muitas rotas, é possível dividir as rotas em vários arquivos.
+
 const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controllers/usuario');
 const turmaController = require('../controllers/turma');
+const upload = require('../config/multer');
+const fileController = require('../controllers/multer');
+const path = require('path');
 
-//retorna todos usuarios
-router.get('/usuario', usuarioController.getAll)
-router.get('/usuario/:id', usuarioController.getById)
+// Rota para retornar todos os usuários
+router.get('/usuario', usuarioController.getAll);
+router.get('/usuario/:cpf', usuarioController.getById);
 
-//cria um usuario passando informação no body
-router.post('/usuario', usuarioController.createrUsuario)
+// Rota para criar um usuário passando informações no corpo da requisição
+router.post('/usuario', usuarioController.createrUsuario);
+router.put('/usuario/:cpf', usuarioController.updateUser);
 
-router.get('/turmas', turmaController.getAll)
-router.post('/turmas', turmaController.createTurma)
-router.put('/turma/:codigo' turmaController.update)
+// Rota para retornar todas as turmas
+router.get('/turmas', turmaController.getAll);
+router.post('/turmas', turmaController.createTurma);
+router.put('/turmas/:codigo', turmaController.updateTurma);
 
-//INSERIR OUTRAS ROTAS -->
+// Rota para deletar um usuário
+router.delete('/usuario/:id', usuarioController.deleteUser);
+
+// Rota para o upload de arquivo
+router.post('/upload', upload.single('image'), fileController.uploadFile);
+
+// Rota para servir a página HTML de upload
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+// INSERIR OUTRAS ROTAS -->
 /* router.get('/turmas', turmasController.getAll)
 router.get('/turmas/:id', turmasCOntroller.getById) */
 

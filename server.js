@@ -28,6 +28,16 @@ sequelize.authenticate()
 // Criando uma instância do express
 const app = express();
 
+// Middleware para lidar com erros
+app.use(function (err, req, res, next) {
+    if (err instanceof multer.MulterError) {
+        return res.status(400).send(`Erro no upload do arquivo: ${err.message}`);
+    } else if (err) {
+        return res.status(400).send(`Erro: ${err.message}`);
+    }
+    next();
+});
+
 // Definindo o middleware para aceitar dados no formato JSON
 app.use(express.json());
 app.use(router);

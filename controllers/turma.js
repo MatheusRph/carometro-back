@@ -35,17 +35,36 @@ exports.createTurma = async (req, res) => {
     }
 };
 
-exports.update = async (req, res) => {
+exports.updateTurma = async (req, res) => {
     const codigoTurma = req.params.codigo;
-    try{
-        const turmaCadastrada = await Turma.findOne({ where: {codigo: codigoTurma }});
+
+    try {
+        const turmaCadastrada = await Turma.findOne({ where: { codigo: codigoTurma } });
 
         if (turmaCadastrada) {
-            delete req.body.codigo
+            console.log(turmaCadastrada.idTurmas)
+            const id = turmaCadastrada.idTurmas
 
-            const [numRowsUpdate] = await Turma(req.body, {where: {codigo: codigoTurma}})
+            // Check if req.body.codigo exists before deleting
+            if (req.body.idTurmas) {
+                delete req.body.idTurmas;
+            }
+
+            // Update the Turma using update method
+            const [numRowsUpdate] = await Turma.update(req.body, { where: { idTurmas: id } });
+
+            if (numRowsUpdate > 0) {
+                const turmaAtualizada = await Turma.findOne({ where: { idTurmas: id } });
+                return res.send({ message: 'Turma atualizada com sucesso', turmacomdadosnovos: turmaAtualizada });
+            } else {
+                return res.send('Erro ao atualizar dados, novos dados não encontrados...');
+            }
+        } else {
+            return res.status(400).send('Turma não encontrada...');
         }
-    } catch {
-
+    } catch (error) {
+        // Handle the error
+        console.error(error);
+        return res.status(500).send('Erro interno do servidor');
     }
 }
